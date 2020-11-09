@@ -1,0 +1,315 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>01.ES docker环境搭建 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="kinaba.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Part I
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="es简单环境搭建.html">
+            
+                <a href="es简单环境搭建.html">
+            
+                    
+                    01.ES docker环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="kinaba.html">
+            
+                <a href="kinaba.html">
+            
+                    
+                    02.初识kinaba
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >01.ES docker环境搭建</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="01es-docker&#x73AF;&#x5883;&#x642D;&#x5EFA;">01.ES docker&#x73AF;&#x5883;&#x642D;&#x5EFA;</h3>
+<ol>
+<li>&#x8BBE;&#x7F6E;&#x56FD;&#x5185;&#x955C;&#x50CF;&#x5730;&#x5740;&#xFF0C;&#x4E3A;docker&#x52A0;&#x901F; <br>
+<code>sudo vim /etc/docker/daemon.json
+{
+ &quot;registry-mirrors&quot;: [&quot;https://wixr7yss.mirror.aliyuncs.com&quot;] 
+}
+sudo systemctl daemon-reload
+sudo systemctl restart docker</code></li>
+<li>&#x521B;&#x5EFA;&#x7F51;&#x6BB5;&#xFF0C;&#x4E3A;&#x4E86;&#x8BA9;&#x540E;&#x671F;&#x540C;&#x4E00;&#x673A;&#x5668;&#x4E0A;&#x7684;es&#x5BB9;&#x5668;&#x5904;&#x4E8E;&#x540C;&#x4E00;&#x4E2A;&#x7F51;&#x6BB5;&#x4E0A;&#xFF0C;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E00;&#x53F0;&#x673A;&#x5668;&#x5C31;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;es&#x96C6;&#x7FA4;<br>
+<code>docker network create --subnet=172.18.0.0/16 esNet</code></li>
+<li>&#x62C9;&#x53D6;es&#x955C;&#x50CF;&#xFF08;&#x6211;&#x4EEC;&#x62C9;&#x53D6;&#x4E00;&#x4E2A;&#x5305;&#x542B;kibana&#x7684;es&#x955C;&#x50CF;&#xFF0C;&#x5148;&#x8FDB;&#x884C;es&#x7684;&#x5165;&#x95E8;&#xFF09;<br>
+<code>docker pull nshou/elasticsearch-kibana</code></li>
+<li>&#x521B;&#x5EFA;es&#x5BB9;&#x5668;<br>
+<code>docker run -e ES_JAVA_OPTS=&quot;-Xms256m -Xmx256m&quot; --restart always  --privileged=true -d -p 9200:9200 -p 9300:9300 -p 5601:5601 --net esNet --ip 172.18.0.8  --name es01 6a72f19c1678</code></li>
+<li>&#x53C2;&#x6570;&#x89E3;&#x91CA;<br>
+ES_JAVA_OPTS=&quot;-Xms256m -Xmx256m&quot;  //&#x8BBE;&#x7F6E;JVM&#x5185;&#x5B58;&#xFF0C;&#x9ED8;&#x8BA4;2G <br>
+--restart always  //&#x81EA;&#x52A8;&#x91CD;&#x542F;<br>
+--privileged=true //&#x8BBE;&#x7F6E;&#x6743;&#x9650;<br>
+-d //&#x540E;&#x53F0;&#x542F;&#x52A8;<br>
+-p //&#x7AEF;&#x53E3;&#x53F7;<br>
+--net //&#x8BBE;&#x7F6E;&#x7F51;&#x6BB5;<br>
+--name //&#x4E3A;&#x5BB9;&#x5668;&#x8BBE;&#x7F6E;&#x540D;&#x5B57;<br>
+6a72f19c1678 //&#x955C;&#x50CF;&#x7684; IMAGE ID<br></li>
+<li>&#x5F00;&#x653E;&#x7AEF;&#x53E3;&#x53F7;<br><pre><code># &#x5F00;&#x653E;&#x7AEF;&#x53E3;
+firewall-cmd --zone=public --add-port=9200-9202/tcp --permanent
+firewall-cmd --zone=public --add-port=9300-9302/tcp --permanent
+firewall-cmd --zone=public --add-port=5601/tcp --permanent
+# &#x91CD;&#x542F;&#x9632;&#x706B;&#x5899;
+systemctl status firewalld
+# &#x67E5;&#x770B;&#x5DF2;&#x7ECF;&#x5F00;&#x653E;&#x7684;&#x7AEF;&#x53E3;&#x53F7;
+firewall-cmd --zone=public --list-ports
+</code></pre></li>
+<li>&#x67E5;&#x770B;es&#x5BB9;&#x5668;&#x548C;kinaba&#x662F;&#x5426;&#x521B;&#x5EFA;&#x6210;&#x529F;&#xFF0C;&#x6362;&#x6210;&#x81EA;&#x5DF1;&#x7684;&#x4E3B;&#x673A;&#x5730;&#x5740;&#xFF0C;&#x5982;&#x679C;&#x80FD;&#x591F;&#x6B63;&#x5E38;&#x663E;&#x793A;&#xFF0C;&#x5219;&#x8868;&#x660E;&#x521B;&#x5EFA;&#x6210;&#x529F;&#xFF01;<br>
+7.1 &#x6D4F;&#x89C8;&#x5668;&#x8F93;&#x5165;&#xFF1A;192.168.27.<strong>:5601<br>
+7.2 &#x6D4F;&#x89C8;&#x5668;&#x8F93;&#x5165;&#xFF1A;192.168.27.</strong>:9200<br></li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Part I">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="kinaba.html" class="navigation navigation-next " aria-label="Next page: 02.初识kinaba">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"01.ES docker环境搭建","level":"1.2.1","depth":2,"next":{"title":"02.初识kinaba","level":"1.2.2","depth":2,"path":"part1/kinaba.md","ref":"part1/kinaba.md","articles":[]},"previous":{"title":"Part I","level":"1.2","depth":1,"path":"part1/README.md","ref":"part1/README.md","articles":[{"title":"01.ES docker环境搭建","level":"1.2.1","depth":2,"path":"part1/es简单环境搭建.md","ref":"part1/es简单环境搭建.md","articles":[]},{"title":"02.初识kinaba","level":"1.2.2","depth":2,"path":"part1/kinaba.md","ref":"part1/kinaba.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"part1/es简单环境搭建.md","mtime":"2020-11-09T14:07:00.829Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-09T13:33:10.502Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
