@@ -37,5 +37,6 @@ firewall-cmd --zone=public --list-ports
 7. 查看es容器和kinaba是否创建成功，换成自己的主机地址，如果能够正常显示，则表明创建成功！<br>
 7.1 浏览器输入：192.168.27.**:5601<br>
 7.2 浏览器输入：192.168.27.**:9200<br>
+![kinaba成功开启展示](https://github.com/Maxwellwk/ElasticsearchNotes/blob/main/picture/kinaba01.png)
 
 
