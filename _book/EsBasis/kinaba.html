@@ -238,6 +238,160 @@
                                 <section class="normal markdown-section">
                                 
                                 <h3 id="02&#x521D;&#x8BC6;kinaba">02.&#x521D;&#x8BC6;kinaba</h3>
+<h4 id="1&#x6253;&#x5F00;kinaba">1.&#x6253;&#x5F00;kinaba</h4>
+<ul>
+<li>&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x6253;&#x5F00;&#x6B64;&#x94FE;&#x63A5;&#xFF1A;127.0.0.1:5601</li>
+</ul>
+<h4 id="2&#x4F7F;&#x7528;kinaba&#x8FDB;&#x884C;&#x7B80;&#x5355;&#x7684;&#x589E;&#x3001;&#x5220;&#x3001;&#x6539;&#x3001;&#x67E5;&#x64CD;&#x4F5C;">2.&#x4F7F;&#x7528;kinaba&#x8FDB;&#x884C;&#x7B80;&#x5355;&#x7684;&#x589E;&#x3001;&#x5220;&#x3001;&#x6539;&#x3001;&#x67E5;&#x64CD;&#x4F5C;</h4>
+<blockquote>
+<p>1.&#x589E;&#x52A0;&#x64CD;&#x4F5C;</p>
+<ul>
+<li>&#x589E;&#x52A0;4&#x6761;&#x623F;&#x5C4B;&#x6570;&#x636E;  <pre><code>PUT /building/house/1
+{
+&quot;name&quot;:&quot;xin fu xiao qu&quot;,
+&quot;finash&quot;:2015,
+&quot;room&quot;:502,
+&quot;sale&quot;:3000000,
+&quot;tags&quot;:[&quot;lift&quot;, &quot;south&quot;]
+}
+...
+{
+&quot;_index&quot; : &quot;building&quot;,
+&quot;_type&quot; : &quot;house&quot;,
+&quot;_id&quot; : &quot;1&quot;,
+&quot;_version&quot; : 1,
+&quot;result&quot; : &quot;created&quot;,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 2,
+  &quot;successful&quot; : 1,
+  &quot;failed&quot; : 0
+},
+&quot;_seq_no&quot; : 0,
+&quot;_primary_term&quot; : 1
+}
+</code></pre></li>
+<li>&#x7ED3;&#x679C;<pre><code>{
+&quot;_index&quot; : &quot;building&quot;,
+&quot;_type&quot; : &quot;house&quot;,
+&quot;_id&quot; : &quot;1&quot;,
+&quot;_version&quot; : 1,
+&quot;result&quot; : &quot;created&quot;,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 2,
+  &quot;successful&quot; : 1,
+  &quot;failed&quot; : 0
+},
+&quot;_seq_no&quot; : 0,
+&quot;_primary_term&quot; : 1
+}
+...
+{
+&quot;_index&quot; : &quot;building&quot;,
+&quot;_type&quot; : &quot;house&quot;,
+&quot;_id&quot; : &quot;4&quot;,
+&quot;_version&quot; : 1,
+&quot;result&quot; : &quot;created&quot;,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 2,
+  &quot;successful&quot; : 2,
+  &quot;failed&quot; : 0
+},
+&quot;_seq_no&quot; : 3,
+&quot;_primary_term&quot; : 1
+}
+</code></pre>2.&#x67E5;&#x8BE2;&#x64CD;&#x4F5C;</li>
+<li>&#x67E5;&#x8BE2;id&#x4E3A;1&#x7684;&#x623F;&#x5C4B;<pre><code>GET /building/house/1
+</code></pre></li>
+<li>&#x7ED3;&#x679C;<pre><code>{
+&quot;_index&quot; : &quot;building&quot;,
+&quot;_type&quot; : &quot;house&quot;,
+&quot;_id&quot; : &quot;1&quot;,
+&quot;_version&quot; : 1,
+&quot;_seq_no&quot; : 0,
+&quot;_primary_term&quot; : 1,
+&quot;found&quot; : true,
+&quot;_source&quot; : {
+  &quot;name&quot; : &quot;xin fu xiao qu&quot;,
+  &quot;finash&quot; : 2015,
+  &quot;room&quot; : 502,
+  &quot;sale&quot; : 3000000,
+  &quot;tags&quot; : [
+    &quot;lift&quot;,
+    &quot;south&quot;
+  ]
+}
+}
+</code></pre>3.&#x4FEE;&#x6539;&#x64CD;&#x4F5C;</li>
+<li>&#x5C06;id&#x4E3A;1&#x7684;&#x623F;&#x95F4;&#x552E;&#x4EF7;&#x6539;&#x4E3A;2500000<pre><code>POST /building/house/1/_update
+{
+&quot;doc&quot;:{
+  &quot;sale&quot;:2500000
+}
+}
+</code></pre></li>
+<li>&#x7ED3;&#x679C;<pre><code>{
+&quot;_index&quot; : &quot;building&quot;,
+&quot;_type&quot; : &quot;house&quot;,
+&quot;_id&quot; : &quot;1&quot;,
+&quot;_version&quot; : 2,
+&quot;result&quot; : &quot;updated&quot;,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 2,
+  &quot;successful&quot; : 2,
+  &quot;failed&quot; : 0
+},
+&quot;_seq_no&quot; : 4,
+&quot;_primary_term&quot; : 1
+}
+# ---------------------------------------
+# &#x67E5;&#x8BE2;&#x4E00;&#x4E0B;&#x770B;&#x770B;&#xFF1A;
+{
+&quot;_index&quot; : &quot;building&quot;,
+&quot;_type&quot; : &quot;house&quot;,
+&quot;_id&quot; : &quot;1&quot;,
+&quot;_version&quot; : 2,
+&quot;_seq_no&quot; : 4,
+&quot;_primary_term&quot; : 1,
+&quot;found&quot; : true,
+&quot;_source&quot; : {
+  &quot;name&quot; : &quot;xin fu xiao qu&quot;,
+  &quot;finash&quot; : 2015,
+  &quot;room&quot; : 502,
+  &quot;sale&quot; : 2500000,
+  &quot;tags&quot; : [
+    &quot;lift&quot;,
+    &quot;south&quot;
+  ]
+}
+}
+</code></pre>4.&#x5220;&#x9664;&#x64CD;&#x4F5C;</li>
+<li>&#x5C06;id&#x4E3A;1&#x7684;&#x6570;&#x636E;&#x5220;&#x9664;<pre><code>DELETE /building/house/1
+</code></pre></li>
+<li>&#x7ED3;&#x679C;<pre><code>{
+&quot;_index&quot; : &quot;building&quot;,
+&quot;_type&quot; : &quot;house&quot;,
+&quot;_id&quot; : &quot;1&quot;,
+&quot;_version&quot; : 3,
+&quot;result&quot; : &quot;deleted&quot;,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 2,
+  &quot;successful&quot; : 2,
+  &quot;failed&quot; : 0
+},
+&quot;_seq_no&quot; : 5,
+&quot;_primary_term&quot; : 1
+}
+# -------------
+# &#x67E5;&#x8BE2;&#x4E00;&#x4E0B;&#x770B;&#x770B;
+{
+&quot;_index&quot; : &quot;building&quot;,
+&quot;_type&quot; : &quot;house&quot;,
+&quot;_id&quot; : &quot;1&quot;,
+&quot;found&quot; : false
+}
+</code></pre></li>
+</ul>
+</blockquote>
 
                                 
                                 </section>
@@ -281,7 +435,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"03.使用kinaba","level":"1.2.3","depth":2,"next":{"title":"Part II","level":"1.3","depth":1,"path":"EsSenior/README.md","ref":"EsSenior/README.md","articles":[{"title":"01.term filter使用技巧","level":"1.3.1","depth":2,"path":"EsSenior/termFilter.md","ref":"EsSenior/termFilter.md","articles":[]}]},"previous":{"title":"02.ES与传统数据库的不同","level":"1.2.2","depth":2,"path":"EsBasis/认识es.md","ref":"EsBasis/认识es.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"EsBasis/kinaba.md","mtime":"2020-11-09T14:40:38.992Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-09T13:33:10.502Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"03.使用kinaba","level":"1.2.3","depth":2,"next":{"title":"Part II","level":"1.3","depth":1,"path":"EsSenior/README.md","ref":"EsSenior/README.md","articles":[{"title":"01.term filter使用技巧","level":"1.3.1","depth":2,"path":"EsSenior/termFilter.md","ref":"EsSenior/termFilter.md","articles":[]}]},"previous":{"title":"02.ES与传统数据库的不同","level":"1.2.2","depth":2,"path":"EsBasis/认识es.md","ref":"EsBasis/认识es.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"EsBasis/kinaba.md","mtime":"2020-11-10T13:14:12.262Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-09T13:33:10.502Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
