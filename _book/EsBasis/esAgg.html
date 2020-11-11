@@ -1,0 +1,800 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>05.ES中的聚合分析 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../EsSenior/" />
+    
+    
+    <link rel="prev" href="esSearch.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Part I
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="es简单环境搭建.html">
+            
+                <a href="es简单环境搭建.html">
+            
+                    
+                    01.ES docker环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="认识es.html">
+            
+                <a href="认识es.html">
+            
+                    
+                    02.ES与传统数据库的不同
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="kinaba.html">
+            
+                <a href="kinaba.html">
+            
+                    
+                    03.使用kinaba
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="esSearch.html">
+            
+                <a href="esSearch.html">
+            
+                    
+                    04.ES中常用的搜索方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.5" data-path="esAgg.html">
+            
+                <a href="esAgg.html">
+            
+                    
+                    05.ES中的聚合分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../EsSenior/">
+            
+                <a href="../EsSenior/">
+            
+                    
+                    Part II
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../EsSenior/termFilter.html">
+            
+                <a href="../EsSenior/termFilter.html">
+            
+                    
+                    01.term filter使用技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >05.ES中的聚合分析</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="05es&#x4E2D;&#x7684;&#x805A;&#x5408;&#x5206;&#x6790;">05.ES&#x4E2D;&#x7684;&#x805A;&#x5408;&#x5206;&#x6790;</h3>
+<h4 id="1&#x8BA1;&#x7B97;&#x6BCF;&#x4E2A;tag&#x4E0B;&#x7684;&#x623F;&#x5C4B;&#x6570;&#x91CF;">1.&#x8BA1;&#x7B97;&#x6BCF;&#x4E2A;tag&#x4E0B;&#x7684;&#x623F;&#x5C4B;&#x6570;&#x91CF;</h4>
+<ul>
+<li>&#x8BED;&#x6CD5;&#xFF1A;<pre><code># &#x805A;&#x5408;&#x67E5;&#x8BE2;
+GET /building/house/_search
+{
+&quot;size&quot;:0,
+&quot;aggs&quot;:{
+  &quot;group_by_tags&quot;:{
+    &quot;terms&quot;: {
+      &quot;field&quot;: &quot;tags.keyword&quot;
+    }
+  }
+}
+}
+</code></pre></li>
+<li>&#x7ED3;&#x679C;&#xFF1A;<pre><code>#! Deprecation: [types removal] Specifying types in search requests is deprecated.
+{
+&quot;took&quot; : 5,
+&quot;timed_out&quot; : false,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 1,
+  &quot;successful&quot; : 1,
+  &quot;skipped&quot; : 0,
+  &quot;failed&quot; : 0
+},
+&quot;hits&quot; : {
+  &quot;total&quot; : {
+    &quot;value&quot; : 6,
+    &quot;relation&quot; : &quot;eq&quot;
+  },
+  &quot;max_score&quot; : null,
+  &quot;hits&quot; : [ ]
+},
+&quot;aggregations&quot; : {
+  &quot;group_by_tags&quot; : {
+    &quot;doc_count_error_upper_bound&quot; : 0,
+    &quot;sum_other_doc_count&quot; : 0,
+    &quot;buckets&quot; : [
+      {
+        &quot;key&quot; : &quot;gas&quot;,
+        &quot;doc_count&quot; : 5
+      },
+      {
+        &quot;key&quot; : &quot;lift&quot;,
+        &quot;doc_count&quot; : 5
+      },
+      {
+        &quot;key&quot; : &quot;south&quot;,
+        &quot;doc_count&quot; : 5
+      },
+      {
+        &quot;key&quot; : &quot;hardcover&quot;,
+        &quot;doc_count&quot; : 1
+      },
+      {
+        &quot;key&quot; : &quot;noth&quot;,
+        &quot;doc_count&quot; : 1
+      }
+    ]
+  }
+}
+}
+</code></pre></li>
+</ul>
+<h4 id="2&#x5BF9;&#x5C0F;&#x533A;&#x540D;&#x79F0;&#x4E2D;&#x542B;&#x6709;shan-shui&#x7684;&#x5C0F;&#x533A;&#xFF0C;&#x8BA1;&#x7B97;&#x6BCF;&#x4E2A;tag&#x4E0B;&#x7684;&#x623F;&#x5C4B;&#x6570;&#x91CF;">2.&#x5BF9;&#x5C0F;&#x533A;&#x540D;&#x79F0;&#x4E2D;&#x542B;&#x6709;shan shui&#x7684;&#x5C0F;&#x533A;&#xFF0C;&#x8BA1;&#x7B97;&#x6BCF;&#x4E2A;tag&#x4E0B;&#x7684;&#x623F;&#x5C4B;&#x6570;&#x91CF;</h4>
+<ul>
+<li>&#x8BED;&#x6CD5;&#xFF1A;<pre><code>GET /building/house/_search
+{
+&quot;size&quot;:0,
+&quot;query&quot;:{
+  &quot;match&quot;:{
+    &quot;name&quot;:&quot;shan shui&quot;
+  }
+},
+&quot;aggs&quot;:{
+  &quot;group_by_tags&quot;:{
+    &quot;terms&quot;: {
+      &quot;field&quot;: &quot;tags.keyword&quot;
+    }
+  }
+}
+}
+</code></pre></li>
+<li>&#x7ED3;&#x679C;&#xFF1A;<pre><code>#! Deprecation: [types removal] Specifying types in search requests is deprecated.
+{
+&quot;took&quot; : 16,
+&quot;timed_out&quot; : false,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 1,
+  &quot;successful&quot; : 1,
+  &quot;skipped&quot; : 0,
+  &quot;failed&quot; : 0
+},
+&quot;hits&quot; : {
+  &quot;total&quot; : {
+    &quot;value&quot; : 2,
+    &quot;relation&quot; : &quot;eq&quot;
+  },
+  &quot;max_score&quot; : null,
+  &quot;hits&quot; : [ ]
+},
+&quot;aggregations&quot; : {
+  &quot;group_by_tags&quot; : {
+    &quot;doc_count_error_upper_bound&quot; : 0,
+    &quot;sum_other_doc_count&quot; : 0,
+    &quot;buckets&quot; : [
+      {
+        &quot;key&quot; : &quot;lift&quot;,
+        &quot;doc_count&quot; : 2
+      },
+      {
+        &quot;key&quot; : &quot;south&quot;,
+        &quot;doc_count&quot; : 2
+      },
+      {
+        &quot;key&quot; : &quot;gas&quot;,
+        &quot;doc_count&quot; : 1
+      }
+    ]
+  }
+}
+}
+</code></pre></li>
+</ul>
+<h4 id="3&#x5148;&#x6839;&#x636E;tag&#x5206;&#x7EC4;&#xFF0C;&#x518D;&#x8BA1;&#x7B97;&#x6BCF;&#x7EC4;&#x7684;&#x5E73;&#x5747;&#x552E;&#x4EF7;">3.&#x5148;&#x6839;&#x636E;tag&#x5206;&#x7EC4;&#xFF0C;&#x518D;&#x8BA1;&#x7B97;&#x6BCF;&#x7EC4;&#x7684;&#x5E73;&#x5747;&#x552E;&#x4EF7;</h4>
+<ul>
+<li>&#x8BED;&#x6CD5;&#xFF1A;<pre><code>GET /building/house/_search
+{
+&quot;size&quot;:0,
+&quot;aggs&quot;:{
+  &quot;group_by_tags&quot;:{
+    &quot;terms&quot;: {
+      &quot;field&quot;: &quot;tags.keyword&quot;
+    },
+    &quot;aggs&quot;: {
+      &quot;avg_sale&quot;: {
+        &quot;avg&quot;: {
+          &quot;field&quot;: &quot;sale&quot;
+        }
+      }
+    }
+  }
+}
+}
+</code></pre></li>
+<li>&#x7ED3;&#x679C;&#xFF1A;<pre><code>#! Deprecation: [types removal] Specifying types in search requests is deprecated.
+{
+&quot;took&quot; : 8,
+&quot;timed_out&quot; : false,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 1,
+  &quot;successful&quot; : 1,
+  &quot;skipped&quot; : 0,
+  &quot;failed&quot; : 0
+},
+&quot;hits&quot; : {
+  &quot;total&quot; : {
+    &quot;value&quot; : 6,
+    &quot;relation&quot; : &quot;eq&quot;
+  },
+  &quot;max_score&quot; : null,
+  &quot;hits&quot; : [ ]
+},
+&quot;aggregations&quot; : {
+  &quot;group_by_tags&quot; : {
+    &quot;doc_count_error_upper_bound&quot; : 0,
+    &quot;sum_other_doc_count&quot; : 0,
+    &quot;buckets&quot; : [
+      {
+        &quot;key&quot; : &quot;gas&quot;,
+        &quot;doc_count&quot; : 5,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 4400000.0
+        }
+      },
+      {
+        &quot;key&quot; : &quot;lift&quot;,
+        &quot;doc_count&quot; : 5,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 3900000.0
+        }
+      },
+      {
+        &quot;key&quot; : &quot;south&quot;,
+        &quot;doc_count&quot; : 5,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 4100000.0
+        }
+      },
+      {
+        &quot;key&quot; : &quot;hardcover&quot;,
+        &quot;doc_count&quot; : 1,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 6000000.0
+        }
+      },
+      {
+        &quot;key&quot; : &quot;noth&quot;,
+        &quot;doc_count&quot; : 1,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 4000000.0
+        }
+      }
+    ]
+  }
+}
+}
+</code></pre></li>
+</ul>
+<h4 id="4&#x518D;3&#x7684;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x6309;&#x7167;&#x552E;&#x4EF7;&#x964D;&#x5E8F;&#x6392;&#x5217;">4.&#x518D;3&#x7684;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x6309;&#x7167;&#x552E;&#x4EF7;&#x964D;&#x5E8F;&#x6392;&#x5217;</h4>
+<ul>
+<li>&#x8BED;&#x6CD5;&#xFF1A;<pre><code>GET /building/house/_search
+{
+&quot;size&quot;:0,
+&quot;aggs&quot;:{
+  &quot;group_by_tags&quot;:{
+    &quot;terms&quot;: {
+      &quot;field&quot;: &quot;tags.keyword&quot;,
+      &quot;order&quot;: {
+        &quot;avg_sale&quot;: &quot;desc&quot;
+      }
+    },
+    &quot;aggs&quot;: {
+      &quot;avg_sale&quot;: {
+        &quot;avg&quot;: {
+          &quot;field&quot;: &quot;sale&quot;
+        }
+      }
+    }
+  }
+}
+}
+</code></pre></li>
+<li>&#x7ED3;&#x679C;&#xFF1A;<pre><code>#! Deprecation: [types removal] Specifying types in search requests is deprecated.
+{
+&quot;took&quot; : 6,
+&quot;timed_out&quot; : false,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 1,
+  &quot;successful&quot; : 1,
+  &quot;skipped&quot; : 0,
+  &quot;failed&quot; : 0
+},
+&quot;hits&quot; : {
+  &quot;total&quot; : {
+    &quot;value&quot; : 6,
+    &quot;relation&quot; : &quot;eq&quot;
+  },
+  &quot;max_score&quot; : null,
+  &quot;hits&quot; : [ ]
+},
+&quot;aggregations&quot; : {
+  &quot;group_by_tags&quot; : {
+    &quot;doc_count_error_upper_bound&quot; : 0,
+    &quot;sum_other_doc_count&quot; : 0,
+    &quot;buckets&quot; : [
+      {
+        &quot;key&quot; : &quot;hardcover&quot;,
+        &quot;doc_count&quot; : 1,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 6000000.0
+        }
+      },
+      {
+        &quot;key&quot; : &quot;gas&quot;,
+        &quot;doc_count&quot; : 5,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 4400000.0
+        }
+      },
+      {
+        &quot;key&quot; : &quot;south&quot;,
+        &quot;doc_count&quot; : 5,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 4100000.0
+        }
+      },
+      {
+        &quot;key&quot; : &quot;noth&quot;,
+        &quot;doc_count&quot; : 1,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 4000000.0
+        }
+      },
+      {
+        &quot;key&quot; : &quot;lift&quot;,
+        &quot;doc_count&quot; : 5,
+        &quot;avg_sale&quot; : {
+          &quot;value&quot; : 3900000.0
+        }
+      }
+    ]
+  }
+}
+}
+</code></pre></li>
+</ul>
+<h4 id="5&#x6309;&#x7167;&#x6307;&#x5B9A;&#x7684;&#x552E;&#x4EF7;&#x533A;&#x95F4;&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x6BCF;&#x4E2A;&#x5206;&#x7EC4;&#x5185;&#x518D;&#x6309;&#x7167;tag&#x5206;&#x7EC4;&#xFF0C;&#x6700;&#x540E;&#x518D;&#x8BA1;&#x7B97;&#x6BCF;&#x4E2A;tag&#x7EC4;&#x7684;&#x5E73;&#x5747;&#x552E;&#x4EF7;">5.&#x6309;&#x7167;&#x6307;&#x5B9A;&#x7684;&#x552E;&#x4EF7;&#x533A;&#x95F4;&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x6BCF;&#x4E2A;&#x5206;&#x7EC4;&#x5185;&#x518D;&#x6309;&#x7167;tag&#x5206;&#x7EC4;&#xFF0C;&#x6700;&#x540E;&#x518D;&#x8BA1;&#x7B97;&#x6BCF;&#x4E2A;tag&#x7EC4;&#x7684;&#x5E73;&#x5747;&#x552E;&#x4EF7;</h4>
+<ul>
+<li>&#x8BED;&#x6CD5;&#xFF1A;<pre><code>GET /building/house/_search
+{
+&quot;size&quot;:0,
+&quot;aggs&quot;:{
+  &quot;group_by_sale&quot;:{
+    &quot;range&quot;: {
+      &quot;field&quot;: &quot;sale&quot;,
+      &quot;ranges&quot;: [
+        {
+          &quot;from&quot;: 1000000,
+          &quot;to&quot;:2000000
+        },
+        {
+          &quot;from&quot;: 2000000,
+          &quot;to&quot;: 4000000
+        },
+        {
+          &quot;from&quot;: 4000000,
+          &quot;to&quot;:6000000
+        }
+      ]
+    },
+    &quot;aggs&quot;: {
+      &quot;group_by_tags&quot;: {
+        &quot;terms&quot;: {
+          &quot;field&quot;: &quot;tags.keyword&quot;
+        },
+        &quot;aggs&quot;: {
+          &quot;average_sale&quot;: {
+            &quot;avg&quot;: {
+              &quot;field&quot;: &quot;sale&quot;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+}
+</code></pre></li>
+<li>&#x7ED3;&#x679C;&#xFF1A;<pre><code>#! Deprecation: [types removal] Specifying types in search requests is deprecated.
+{
+&quot;took&quot; : 7,
+&quot;timed_out&quot; : false,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 1,
+  &quot;successful&quot; : 1,
+  &quot;skipped&quot; : 0,
+  &quot;failed&quot; : 0
+},
+&quot;hits&quot; : {
+  &quot;total&quot; : {
+    &quot;value&quot; : 6,
+    &quot;relation&quot; : &quot;eq&quot;
+  },
+  &quot;max_score&quot; : null,
+  &quot;hits&quot; : [ ]
+},
+&quot;aggregations&quot; : {
+  &quot;group_by_sale&quot; : {
+    &quot;buckets&quot; : [
+      {
+        &quot;key&quot; : &quot;1000000.0-2000000.0&quot;,
+        &quot;from&quot; : 1000000.0,
+        &quot;to&quot; : 2000000.0,
+        &quot;doc_count&quot; : 0,
+        &quot;group_by_tags&quot; : {
+          &quot;doc_count_error_upper_bound&quot; : 0,
+          &quot;sum_other_doc_count&quot; : 0,
+          &quot;buckets&quot; : [ ]
+        }
+      },
+      {
+        &quot;key&quot; : &quot;2000000.0-4000000.0&quot;,
+        &quot;from&quot; : 2000000.0,
+        &quot;to&quot; : 4000000.0,
+        &quot;doc_count&quot; : 2,
+        &quot;group_by_tags&quot; : {
+          &quot;doc_count_error_upper_bound&quot; : 0,
+          &quot;sum_other_doc_count&quot; : 0,
+          &quot;buckets&quot; : [
+            {
+              &quot;key&quot; : &quot;lift&quot;,
+              &quot;doc_count&quot; : 2,
+              &quot;average_sale&quot; : {
+                &quot;value&quot; : 2750000.0
+              }
+            },
+            {
+              &quot;key&quot; : &quot;south&quot;,
+              &quot;doc_count&quot; : 2,
+              &quot;average_sale&quot; : {
+                &quot;value&quot; : 2750000.0
+              }
+            },
+            {
+              &quot;key&quot; : &quot;gas&quot;,
+              &quot;doc_count&quot; : 1,
+              &quot;average_sale&quot; : {
+                &quot;value&quot; : 3000000.0
+              }
+            }
+          ]
+        }
+      },
+      {
+        &quot;key&quot; : &quot;4000000.0-6000000.0&quot;,
+        &quot;from&quot; : 4000000.0,
+        &quot;to&quot; : 6000000.0,
+        &quot;doc_count&quot; : 3,
+        &quot;group_by_tags&quot; : {
+          &quot;doc_count_error_upper_bound&quot; : 0,
+          &quot;sum_other_doc_count&quot; : 0,
+          &quot;buckets&quot; : [
+            {
+              &quot;key&quot; : &quot;gas&quot;,
+              &quot;doc_count&quot; : 3,
+              &quot;average_sale&quot; : {
+                &quot;value&quot; : 4333333.333333333
+              }
+            },
+            {
+              &quot;key&quot; : &quot;lift&quot;,
+              &quot;doc_count&quot; : 2,
+              &quot;average_sale&quot; : {
+                &quot;value&quot; : 4000000.0
+              }
+            },
+            {
+              &quot;key&quot; : &quot;south&quot;,
+              &quot;doc_count&quot; : 2,
+              &quot;average_sale&quot; : {
+                &quot;value&quot; : 4500000.0
+              }
+            },
+            {
+              &quot;key&quot; : &quot;noth&quot;,
+              &quot;doc_count&quot; : 1,
+              &quot;average_sale&quot; : {
+                &quot;value&quot; : 4000000.0
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+}
+</code></pre></li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="esSearch.html" class="navigation navigation-prev " aria-label="Previous page: 04.ES中常用的搜索方法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../EsSenior/" class="navigation navigation-next " aria-label="Next page: Part II">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"05.ES中的聚合分析","level":"1.2.5","depth":2,"next":{"title":"Part II","level":"1.3","depth":1,"path":"EsSenior/README.md","ref":"EsSenior/README.md","articles":[{"title":"01.term filter使用技巧","level":"1.3.1","depth":2,"path":"EsSenior/termFilter.md","ref":"EsSenior/termFilter.md","articles":[]}]},"previous":{"title":"04.ES中常用的搜索方法","level":"1.2.4","depth":2,"path":"EsBasis/esSearch.md","ref":"EsBasis/esSearch.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"EsBasis/esAgg.md","mtime":"2020-11-11T15:36:10.542Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-09T13:33:10.502Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
