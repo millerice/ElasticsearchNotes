@@ -8,6 +8,7 @@
     * [04.ES中常用的搜索方法](EsBasis/esSearch.md)
     * [05.ES中的聚合分析](EsBasis/esAgg.md)
     * [06.ES中的groovy脚本操作](EsBasis/06_esScript.md)
+    * [07.ES中mget批量查询](EsBasis/07_esMget.md)
 * [Part II](EsSenior/README.md)
     * [01.term filter使用技巧](EsSenior/termFilter.md)
 
