@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Part II · GitBook</title>
+        <title>06.ES中的groovy脚本操作 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="termFilter.html" />
+    <link rel="next" href="../EsSenior/" />
     
     
-    <link rel="prev" href="../EsBasis/06_esScript.html" />
+    <link rel="prev" href="esAgg.html" />
     
 
     </head>
@@ -102,9 +102,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="../EsBasis/">
+        <li class="chapter " data-level="1.2" data-path="./">
             
-                <a href="../EsBasis/">
+                <a href="./">
             
                     
                     Part I
@@ -116,9 +116,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="../EsBasis/es简单环境搭建.html">
+        <li class="chapter " data-level="1.2.1" data-path="es简单环境搭建.html">
             
-                <a href="../EsBasis/es简单环境搭建.html">
+                <a href="es简单环境搭建.html">
             
                     
                     01.ES docker环境搭建
@@ -129,9 +129,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="../EsBasis/认识es.html">
+        <li class="chapter " data-level="1.2.2" data-path="认识es.html">
             
-                <a href="../EsBasis/认识es.html">
+                <a href="认识es.html">
             
                     
                     02.ES与传统数据库的不同
@@ -142,9 +142,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3" data-path="../EsBasis/kinaba.html">
+        <li class="chapter " data-level="1.2.3" data-path="kinaba.html">
             
-                <a href="../EsBasis/kinaba.html">
+                <a href="kinaba.html">
             
                     
                     03.使用kinaba
@@ -155,9 +155,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.4" data-path="../EsBasis/esSearch.html">
+        <li class="chapter " data-level="1.2.4" data-path="esSearch.html">
             
-                <a href="../EsBasis/esSearch.html">
+                <a href="esSearch.html">
             
                     
                     04.ES中常用的搜索方法
@@ -168,9 +168,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.5" data-path="../EsBasis/esAgg.html">
+        <li class="chapter " data-level="1.2.5" data-path="esAgg.html">
             
-                <a href="../EsBasis/esAgg.html">
+                <a href="esAgg.html">
             
                     
                     05.ES中的聚合分析
@@ -181,9 +181,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.6" data-path="../EsBasis/06_esScript.html">
+        <li class="chapter active" data-level="1.2.6" data-path="06_esScript.html">
             
-                <a href="../EsBasis/06_esScript.html">
+                <a href="06_esScript.html">
             
                     
                     06.ES中的groovy脚本操作
@@ -199,9 +199,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3" data-path="./">
+        <li class="chapter " data-level="1.3" data-path="../EsSenior/">
             
-                <a href="./">
+                <a href="../EsSenior/">
             
                     
                     Part II
@@ -213,9 +213,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="termFilter.html">
+        <li class="chapter " data-level="1.3.1" data-path="../EsSenior/termFilter.html">
             
-                <a href="termFilter.html">
+                <a href="../EsSenior/termFilter.html">
             
                     
                     01.term filter使用技巧
@@ -261,7 +261,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Part II</a>
+        <a href=".." >06.ES中的groovy脚本操作</a>
     </h1>
 </div>
 
@@ -276,7 +276,60 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="part-ii">Part II</h1>
+                                <h3 id="06es&#x4E2D;&#x7684;painless&#x811A;&#x672C;&#x64CD;&#x4F5C;">06.ES&#x4E2D;&#x7684;painless&#x811A;&#x672C;&#x64CD;&#x4F5C;</h3>
+<p><strong>&#x4E86;&#x89E3;&#x5373;&#x53EF;&#xFF0C;&#x4F7F;&#x7528;&#x811A;&#x672C;&#x4F1A;&#x5BFC;&#x81F4;es&#x6027;&#x80FD;&#x964D;&#x4F4E;&#x3002;&#x4E0D;&#x5E38;&#x4F7F;&#x7528;&#xFF0C;&#x5728;&#x89E3;&#x51B3;&#x590D;&#x6742;&#x4E1A;&#x52A1;&#x95EE;&#x9898;&#x65F6;&#x624D;&#x4F7F;&#x7528;.</strong></p>
+<ul>
+<li>&#x6DFB;&#x52A0;&#x4E00;&#x6761;&#x6570;&#x636E;</li>
+<li>&#x8BED;&#x6CD5;<pre><code>PUT /script_index/script_type/1
+{
+&quot;num&quot;:0,
+&quot;tags&quot;:[]
+}
+# &#x7ED3;&#x679C;&#xFF1A;&#x7565;
+</code></pre></li>
+</ul>
+<h4 id="1&#x4F7F;&#x7528;script&#x811A;&#x672C;&#x5B9E;&#x73B0;&#x52A0;&#x6CD5;&#x64CD;&#x4F5C;">1.&#x4F7F;&#x7528;script&#x811A;&#x672C;&#x5B9E;&#x73B0;&#x52A0;&#x6CD5;&#x64CD;&#x4F5C;</h4>
+<ul>
+<li>&#x8BED;&#x6CD5;&#xFF1A;<pre><code>POST /script_index/script_type/1/_update
+{
+&quot;script&quot;:{
+  &quot;lang&quot;: &quot;painless&quot;,
+  &quot;source&quot;: &quot;&quot;&quot;ctx._source.num+=1&quot;&quot;&quot;
+}
+}
+</code></pre></li>
+<li>&#x7ED3;&#x679C;&#xFF1A;<pre><code>#! Deprecation: [types removal] Specifying types in document update requests is deprecated, use the endpoint /{index}/_update/{id} instead.
+{
+&quot;_index&quot; : &quot;script_index&quot;,
+&quot;_type&quot; : &quot;script_type&quot;,
+&quot;_id&quot; : &quot;1&quot;,
+&quot;_version&quot; : 2,
+&quot;result&quot; : &quot;updated&quot;,
+&quot;_shards&quot; : {
+  &quot;total&quot; : 2,
+  &quot;successful&quot; : 2,
+  &quot;failed&quot; : 0
+},
+&quot;_seq_no&quot; : 2,
+&quot;_primary_term&quot; : 1
+}
+# &#x641C;&#x7D22;&#x4E00;&#x4E0B;
+#! Deprecation: [types removal] Specifying types in document get requests is deprecated, use the /{index}/_doc/{id} endpoint instead.
+{
+&quot;_index&quot; : &quot;script_index&quot;,
+&quot;_type&quot; : &quot;script_type&quot;,
+&quot;_id&quot; : &quot;1&quot;,
+&quot;_version&quot; : 2,
+&quot;_seq_no&quot; : 2,
+&quot;_primary_term&quot; : 1,
+&quot;found&quot; : true,
+&quot;_source&quot; : {
+  &quot;num&quot; : 2,
+  &quot;tags&quot; : [ ]
+}
+}
+</code></pre></li>
+</ul>
 
                                 
                                 </section>
@@ -304,12 +357,12 @@
 
             
                 
-                <a href="../EsBasis/06_esScript.html" class="navigation navigation-prev " aria-label="Previous page: 06.ES中的groovy脚本操作">
+                <a href="esAgg.html" class="navigation navigation-prev " aria-label="Previous page: 05.ES中的聚合分析">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="termFilter.html" class="navigation navigation-next " aria-label="Next page: 01.term filter使用技巧">
+                <a href="../EsSenior/" class="navigation navigation-next " aria-label="Next page: Part II">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -320,7 +373,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Part II","level":"1.3","depth":1,"next":{"title":"01.term filter使用技巧","level":"1.3.1","depth":2,"path":"EsSenior/termFilter.md","ref":"EsSenior/termFilter.md","articles":[]},"previous":{"title":"06.ES中的groovy脚本操作","level":"1.2.6","depth":2,"path":"EsBasis/06_esScript.md","ref":"EsBasis/06_esScript.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"EsSenior/README.md","mtime":"2020-11-09T14:22:37.372Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-09T13:33:10.502Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"06.ES中的groovy脚本操作","level":"1.2.6","depth":2,"next":{"title":"Part II","level":"1.3","depth":1,"path":"EsSenior/README.md","ref":"EsSenior/README.md","articles":[{"title":"01.term filter使用技巧","level":"1.3.1","depth":2,"path":"EsSenior/termFilter.md","ref":"EsSenior/termFilter.md","articles":[]}]},"previous":{"title":"05.ES中的聚合分析","level":"1.2.5","depth":2,"path":"EsBasis/esAgg.md","ref":"EsBasis/esAgg.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"EsBasis/06_esScript.md","mtime":"2020-11-12T14:03:31.491Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-09T13:33:10.502Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
