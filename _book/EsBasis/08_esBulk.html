@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>03.使用kinaba · GitBook</title>
+        <title>08.ES中bulk批量操作 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="esSearch.html" />
+    <link rel="next" href="../EsSenior/" />
     
     
-    <link rel="prev" href="认识es.html" />
+    <link rel="prev" href="07_esMget.html" />
     
 
     </head>
@@ -142,7 +142,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.3" data-path="kinaba.html">
+        <li class="chapter " data-level="1.2.3" data-path="kinaba.html">
             
                 <a href="kinaba.html">
             
@@ -207,7 +207,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.8" data-path="08_esBulk.html">
+        <li class="chapter active" data-level="1.2.8" data-path="08_esBulk.html">
             
                 <a href="08_esBulk.html">
             
@@ -287,7 +287,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >03.使用kinaba</a>
+        <a href=".." >08.ES中bulk批量操作</a>
     </h1>
 </div>
 
@@ -302,161 +302,97 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h3 id="02&#x521D;&#x8BC6;kinaba">02.&#x521D;&#x8BC6;kinaba</h3>
-<h4 id="1&#x6253;&#x5F00;kinaba">1.&#x6253;&#x5F00;kinaba</h4>
+                                <h3 id="08es&#x4E2D;bulk&#x6279;&#x91CF;&#x64CD;&#x4F5C;">08.ES&#x4E2D;bulk&#x6279;&#x91CF;&#x64CD;&#x4F5C;</h3>
+<p><strong>&#x4ECB;&#x7ECD;&#xFF1A;bulk api&#x5BF9;json&#x7684;&#x8BED;&#x6CD5;&#xFF0C;&#x6709;&#x4E25;&#x683C;&#x7684;&#x8981;&#x6C42;&#xFF0C;&#x6BCF;&#x4E2A;json&#x4E32;&#x4E0D;&#x80FD;&#x6362;&#x884C;&#xFF0C;&#x53EA;&#x80FD;&#x653E;&#x4E00;&#x884C;&#xFF0C;&#x540C;&#x65F6;&#x4E00;&#x4E2A;json&#x4E32;&#x548C;&#x4E00;&#x4E2A;json&#x4E32;&#x4E4B;&#x95F4;&#xFF0C;&#x5FC5;&#x987B;&#x6709;&#x4E00;&#x4E2A;&#x6362;&#x884C;&#x3002;bulk&#x64CD;&#x4F5C;&#x4E2D;&#xFF0C;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x64CD;&#x4F5C;&#x5931;&#x8D25;&#xFF0C;&#x662F;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5176;&#x4ED6;&#x7684;&#x64CD;&#x4F5C;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x91CC;&#xFF0C;&#x4F1A;&#x544A;&#x8BC9;&#x4F60;&#x5F02;&#x5E38;&#x65E5;&#x5FD7;</strong></p>
+<h4 id="1bulk-size&#x6700;&#x4F73;&#x5927;&#x5C0F;">1.bulk size&#x6700;&#x4F73;&#x5927;&#x5C0F;</h4>
+<p><strong>bulk request&#x4F1A;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#x91CC;&#xFF0C;&#x5982;&#x679C;&#x592A;&#x5927;&#x7684;&#x8BDD;&#xFF0C;&#x6027;&#x80FD;&#x53CD;&#x800C;&#x4F1A;&#x4E0B;&#x964D;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x53CD;&#x590D;&#x5C1D;&#x8BD5;&#x4E00;&#x4E2A;&#x6700;&#x4F73;&#x7684;bulk size&#x3002;&#x4E00;&#x822C;&#x4ECE;1000~5000&#x6761;&#x6570;&#x636E;&#x5F00;&#x59CB;&#xFF0C;&#x5C1D;&#x8BD5;&#x9010;&#x6E10;&#x589E;&#x52A0;&#x3002;&#x53E6;&#x5916;&#xFF0C;&#x5982;&#x679C;&#x770B;&#x5927;&#x5C0F;&#x7684;&#x8BDD;&#xFF0C;&#x6700;&#x597D;&#x662F;&#x5728;5~15MB&#x4E4B;&#x95F4;&#x3002;</strong></p>
+<h4 id="2&#x53EF;&#x4EE5;&#x6267;&#x884C;bulk&#x64CD;&#x4F5C;&#x7684;&#x7C7B;&#x578B;">2.&#x53EF;&#x4EE5;&#x6267;&#x884C;bulk&#x64CD;&#x4F5C;&#x7684;&#x7C7B;&#x578B;</h4>
+<p>&#xFF08;1&#xFF09;delete&#xFF1A;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x6587;&#x6863;&#xFF0C;&#x53EA;&#x8981;1&#x4E2A;json&#x4E32;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;<br>&#xFF08;2&#xFF09;create&#xFF1A;PUT /index/type/id/_create&#xFF0C;&#x5F3A;&#x5236;&#x521B;&#x5EFA;<br>&#xFF08;3&#xFF09;index&#xFF1A;&#x666E;&#x901A;&#x7684;put&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x662F;&#x521B;&#x5EFA;&#x6587;&#x6863;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x5168;&#x91CF;&#x66FF;&#x6362;&#x6587;&#x6863;<br>&#xFF08;4&#xFF09;update&#xFF1A;&#x6267;&#x884C;&#x7684;partial update&#x64CD;&#x4F5C;  </p>
+<h4 id="3bulk&#x64CD;&#x4F5C;">3.bulk&#x64CD;&#x4F5C;</h4>
 <ul>
-<li>&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x6253;&#x5F00;&#x6B64;&#x94FE;&#x63A5;&#xFF1A;127.0.0.1:5601</li>
-</ul>
-<h4 id="2&#x4F7F;&#x7528;kinaba&#x8FDB;&#x884C;&#x7B80;&#x5355;&#x7684;&#x589E;&#x3001;&#x5220;&#x3001;&#x6539;&#x3001;&#x67E5;&#x64CD;&#x4F5C;">2.&#x4F7F;&#x7528;kinaba&#x8FDB;&#x884C;&#x7B80;&#x5355;&#x7684;&#x589E;&#x3001;&#x5220;&#x3001;&#x6539;&#x3001;&#x67E5;&#x64CD;&#x4F5C;</h4>
-<blockquote>
-<p>1.&#x589E;&#x52A0;&#x64CD;&#x4F5C;</p>
-<ul>
-<li>&#x589E;&#x52A0;4&#x6761;&#x623F;&#x5C4B;&#x6570;&#x636E;  <pre><code>PUT /building/house/1
-{
-&quot;name&quot;:&quot;xin fu xiao qu&quot;,
-&quot;finash&quot;:2015,
-&quot;room&quot;:502,
-&quot;sale&quot;:3000000,
-&quot;tags&quot;:[&quot;lift&quot;, &quot;south&quot;]
-}
-...
-{
-&quot;_index&quot; : &quot;building&quot;,
-&quot;_type&quot; : &quot;house&quot;,
-&quot;_id&quot; : &quot;1&quot;,
-&quot;_version&quot; : 1,
-&quot;result&quot; : &quot;created&quot;,
-&quot;_shards&quot; : {
-  &quot;total&quot; : 2,
-  &quot;successful&quot; : 1,
-  &quot;failed&quot; : 0
-},
-&quot;_seq_no&quot; : 0,
-&quot;_primary_term&quot; : 1
-}
+<li>&#x8981;&#x6C42;&#xFF1A;&#x5220;&#x9664;/building/house/ &#x4E0B;id&#x4E3A;6&#x7684;&#x623F;&#x5C4B;&#xFF0C;&#x5E76;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;id&#x4E3A;7&#x7684;&#x623F;&#x5B50;</li>
+<li>&#x8BED;&#x6CD5;&#xFF1A;<pre><code>POST /building/house/_bulk
+{&quot;delete&quot;:{&quot;_id&quot;:6}}
+{&quot;create&quot;:{&quot;_id&quot;:7}}
 </code></pre></li>
-<li>&#x7ED3;&#x679C;<pre><code>{
-&quot;_index&quot; : &quot;building&quot;,
-&quot;_type&quot; : &quot;house&quot;,
-&quot;_id&quot; : &quot;1&quot;,
-&quot;_version&quot; : 1,
-&quot;result&quot; : &quot;created&quot;,
-&quot;_shards&quot; : {
-  &quot;total&quot; : 2,
-  &quot;successful&quot; : 1,
-  &quot;failed&quot; : 0
-},
-&quot;_seq_no&quot; : 0,
-&quot;_primary_term&quot; : 1
-}
-...
+<li>&#x7ED3;&#x679C;&#xFF1A;<pre><code>#! Deprecation: [types removal] Specifying types in bulk requests is deprecated.
 {
-&quot;_index&quot; : &quot;building&quot;,
-&quot;_type&quot; : &quot;house&quot;,
-&quot;_id&quot; : &quot;4&quot;,
-&quot;_version&quot; : 1,
-&quot;result&quot; : &quot;created&quot;,
-&quot;_shards&quot; : {
-  &quot;total&quot; : 2,
-  &quot;successful&quot; : 2,
-  &quot;failed&quot; : 0
-},
-&quot;_seq_no&quot; : 3,
-&quot;_primary_term&quot; : 1
-}
-</code></pre>2.&#x67E5;&#x8BE2;&#x64CD;&#x4F5C;</li>
-<li>&#x67E5;&#x8BE2;id&#x4E3A;1&#x7684;&#x623F;&#x5C4B;<pre><code>GET /building/house/1
-</code></pre></li>
-<li>&#x7ED3;&#x679C;<pre><code>{
-&quot;_index&quot; : &quot;building&quot;,
-&quot;_type&quot; : &quot;house&quot;,
-&quot;_id&quot; : &quot;1&quot;,
-&quot;_version&quot; : 1,
-&quot;_seq_no&quot; : 0,
-&quot;_primary_term&quot; : 1,
-&quot;found&quot; : true,
-&quot;_source&quot; : {
-  &quot;name&quot; : &quot;xin fu xiao qu&quot;,
-  &quot;finash&quot; : 2015,
-  &quot;room&quot; : 502,
-  &quot;sale&quot; : 3000000,
-  &quot;tags&quot; : [
-    &quot;lift&quot;,
-    &quot;south&quot;
-  ]
-}
-}
-</code></pre>3.&#x4FEE;&#x6539;&#x64CD;&#x4F5C;</li>
-<li>&#x5C06;id&#x4E3A;1&#x7684;&#x623F;&#x95F4;&#x552E;&#x4EF7;&#x6539;&#x4E3A;2500000<pre><code>POST /building/house/1/_update
-{
-&quot;doc&quot;:{
-  &quot;sale&quot;:2500000
-}
-}
-</code></pre></li>
-<li>&#x7ED3;&#x679C;<pre><code>{
-&quot;_index&quot; : &quot;building&quot;,
-&quot;_type&quot; : &quot;house&quot;,
-&quot;_id&quot; : &quot;1&quot;,
-&quot;_version&quot; : 2,
-&quot;result&quot; : &quot;updated&quot;,
-&quot;_shards&quot; : {
-  &quot;total&quot; : 2,
-  &quot;successful&quot; : 2,
-  &quot;failed&quot; : 0
-},
-&quot;_seq_no&quot; : 4,
-&quot;_primary_term&quot; : 1
-}
-# ---------------------------------------
-# &#x67E5;&#x8BE2;&#x4E00;&#x4E0B;&#x770B;&#x770B;&#xFF1A;
-{
-&quot;_index&quot; : &quot;building&quot;,
-&quot;_type&quot; : &quot;house&quot;,
-&quot;_id&quot; : &quot;1&quot;,
-&quot;_version&quot; : 2,
-&quot;_seq_no&quot; : 4,
-&quot;_primary_term&quot; : 1,
-&quot;found&quot; : true,
-&quot;_source&quot; : {
-  &quot;name&quot; : &quot;xin fu xiao qu&quot;,
-  &quot;finash&quot; : 2015,
-  &quot;room&quot; : 502,
-  &quot;sale&quot; : 2500000,
-  &quot;tags&quot; : [
-    &quot;lift&quot;,
-    &quot;south&quot;
-  ]
-}
-}
-</code></pre>4.&#x5220;&#x9664;&#x64CD;&#x4F5C;</li>
-<li>&#x5C06;id&#x4E3A;1&#x7684;&#x6570;&#x636E;&#x5220;&#x9664;<pre><code>DELETE /building/house/1
-</code></pre></li>
-<li>&#x7ED3;&#x679C;<pre><code>{
-&quot;_index&quot; : &quot;building&quot;,
-&quot;_type&quot; : &quot;house&quot;,
-&quot;_id&quot; : &quot;1&quot;,
-&quot;_version&quot; : 3,
-&quot;result&quot; : &quot;deleted&quot;,
-&quot;_shards&quot; : {
-  &quot;total&quot; : 2,
-  &quot;successful&quot; : 2,
-  &quot;failed&quot; : 0
-},
-&quot;_seq_no&quot; : 5,
-&quot;_primary_term&quot; : 1
-}
-# -------------
-# &#x67E5;&#x8BE2;&#x4E00;&#x4E0B;&#x770B;&#x770B;
-{
-&quot;_index&quot; : &quot;building&quot;,
-&quot;_type&quot; : &quot;house&quot;,
-&quot;_id&quot; : &quot;1&quot;,
-&quot;found&quot; : false
+&quot;took&quot; : 175,
+&quot;errors&quot; : false,
+&quot;items&quot; : [
+  {
+    &quot;delete&quot; : {
+      &quot;_index&quot; : &quot;building&quot;,
+      &quot;_type&quot; : &quot;house&quot;,
+      &quot;_id&quot; : &quot;6&quot;,
+      &quot;_version&quot; : 2,
+      &quot;result&quot; : &quot;deleted&quot;,
+      &quot;_shards&quot; : {
+        &quot;total&quot; : 2,
+        &quot;successful&quot; : 2,
+        &quot;failed&quot; : 0
+      },
+      &quot;_seq_no&quot; : 19,
+      &quot;_primary_term&quot; : 2,
+      &quot;status&quot; : 200
+    }
+  }
+]
 }
 </code></pre></li>
 </ul>
-</blockquote>
+<h4 id="4bulk&#x6279;&#x91CF;&#x63D2;&#x5165;&#x6570;&#x636E;">4.bulk&#x6279;&#x91CF;&#x63D2;&#x5165;&#x6570;&#x636E;</h4>
+<ul>
+<li>&#x8981;&#x6C42;&#xFF1A;&#x63D2;&#x5165;id&#x4E3A;8&#x548C;id&#x4E3A;9&#x7684;&#x4E24;&#x5957;&#x623F;&#x5B50;</li>
+<li>&#x8BED;&#x6CD5;&#xFF1A;<pre><code>POST _bulk
+{&quot;index&quot;:{&quot;_index&quot;:&quot;building&quot;, &quot;_type&quot;:&quot;house&quot;, &quot;_id&quot;:8}}
+{&quot;name&quot;:&quot;shui yue xiao qu&quot;,&quot;finash&quot;:2020,&quot;room&quot;:1001,&quot;sale&quot;:7500000,&quot;tags&quot;:[&quot;lift&quot;,&quot;south&quot;,&quot;gas&quot;]}
+{&quot;index&quot;:{&quot;_index&quot;:&quot;building&quot;, &quot;_type&quot;:&quot;house&quot;, &quot;_id&quot;:9}}
+{&quot;name&quot;:&quot;jing yue xiao qu&quot;,&quot;finash&quot;:2020,&quot;room&quot;:1101,&quot;sale&quot;:8000000,&quot;tags&quot;:[&quot;lift&quot;,&quot;south&quot;,&quot;gas&quot;]}
+</code></pre></li>
+<li>&#x7ED3;&#x679C;&#xFF1A;<pre><code>#! Deprecation: [types removal] Specifying types in bulk requests is deprecated.
+{
+&quot;took&quot; : 122,
+&quot;errors&quot; : false,
+&quot;items&quot; : [
+  {
+    &quot;index&quot; : {
+      &quot;_index&quot; : &quot;building&quot;,
+      &quot;_type&quot; : &quot;house&quot;,
+      &quot;_id&quot; : &quot;8&quot;,
+      &quot;_version&quot; : 1,
+      &quot;result&quot; : &quot;created&quot;,
+      &quot;_shards&quot; : {
+        &quot;total&quot; : 2,
+        &quot;successful&quot; : 2,
+        &quot;failed&quot; : 0
+      },
+      &quot;_seq_no&quot; : 20,
+      &quot;_primary_term&quot; : 2,
+      &quot;status&quot; : 201
+    }
+  },
+  {
+    &quot;index&quot; : {
+      &quot;_index&quot; : &quot;building&quot;,
+      &quot;_type&quot; : &quot;house&quot;,
+      &quot;_id&quot; : &quot;9&quot;,
+      &quot;_version&quot; : 1,
+      &quot;result&quot; : &quot;created&quot;,
+      &quot;_shards&quot; : {
+        &quot;total&quot; : 2,
+        &quot;successful&quot; : 2,
+        &quot;failed&quot; : 0
+      },
+      &quot;_seq_no&quot; : 21,
+      &quot;_primary_term&quot; : 2,
+      &quot;status&quot; : 201
+    }
+  }
+]
+}
+</code></pre></li>
+</ul>
 
                                 
                                 </section>
@@ -484,12 +420,12 @@
 
             
                 
-                <a href="认识es.html" class="navigation navigation-prev " aria-label="Previous page: 02.ES与传统数据库的不同">
+                <a href="07_esMget.html" class="navigation navigation-prev " aria-label="Previous page: 07.ES中mget批量查询">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="esSearch.html" class="navigation navigation-next " aria-label="Next page: 04.ES中常用的搜索方法">
+                <a href="../EsSenior/" class="navigation navigation-next " aria-label="Next page: Part II">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -500,7 +436,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"03.使用kinaba","level":"1.2.3","depth":2,"next":{"title":"04.ES中常用的搜索方法","level":"1.2.4","depth":2,"path":"EsBasis/esSearch.md","ref":"EsBasis/esSearch.md","articles":[]},"previous":{"title":"02.ES与传统数据库的不同","level":"1.2.2","depth":2,"path":"EsBasis/认识es.md","ref":"EsBasis/认识es.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"EsBasis/kinaba.md","mtime":"2020-11-10T13:14:12.831Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-09T13:33:10.502Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"08.ES中bulk批量操作","level":"1.2.8","depth":2,"next":{"title":"Part II","level":"1.3","depth":1,"path":"EsSenior/README.md","ref":"EsSenior/README.md","articles":[{"title":"01.term filter使用技巧","level":"1.3.1","depth":2,"path":"EsSenior/termFilter.md","ref":"EsSenior/termFilter.md","articles":[]}]},"previous":{"title":"07.ES中mget批量查询","level":"1.2.7","depth":2,"path":"EsBasis/07_esMget.md","ref":"EsBasis/07_esMget.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"EsBasis/08_esBulk.md","mtime":"2020-11-12T15:35:18.445Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-09T13:33:10.502Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
